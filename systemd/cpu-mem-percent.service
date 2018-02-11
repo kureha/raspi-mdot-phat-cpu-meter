@@ -1,0 +1,17 @@
+[Unit]
+Description=Pimoroni CPU,MEM Status Display
+After=syslog.target
+
+[Service]
+Type=simple
+WorkingDirectory=/usr/local/pimoroni/cpu-mem-percent/library
+ExecStart=/usr/bin/python cpu_mem_percent.py
+ExecStopPost=/usr/bin/python clear_ipaddr.py
+TimeoutStopSec=5
+StandardOutput=journal
+StandardError=journal
+User=pi
+Group=pi
+
+[Install]
+WantedBy = multi-user.target
