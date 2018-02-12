@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import time
-from microdotphat import set_pixel, write_string, scroll, clear, show, WIDTH, HEIGHT
+from microdotphat import set_pixel, scroll, clear, show, WIDTH, HEIGHT
 
 # Pimonori pHat DotMatrix Class
 class DotMatrix:
@@ -24,18 +24,18 @@ class DotMatrix:
 		# set_pixel
 		render_counter = 0
 		for i in range(WIDTH):
-			# skip list check
+			# skip invisible matrix
 			if i in DotMatrix.SKIP_LIST:
 				continue
 
 			# increment render counter
 			render_counter = render_counter + 1
 
-			# real meter check
+			# meter count check
 			if i >= meter_minnum and render_counter > x_range:
 				break
 
-			# render left ro right
+			# render up to down
 			for k in y_range:
 				set_pixel(i, k, 1)
 				#print("x = " + str(i))
@@ -45,24 +45,6 @@ class DotMatrix:
 	@staticmethod
 	def show():
 		show()
-
-	# Write string and scrolling to last
-	@staticmethod
-	def render_string(s, scroll_x = 8, scroll_y = 0, scroll_sleep = 1, kerning_flag = False):
-		# init view
-		clear()
-
-		# render string
-		write_string(s, kerning = kerning_flag)
-		show()
-		time.sleep(scroll_sleep)
-
-		# render to end
-		for i in range(len(s)):
-			# scroll -> render
-			scroll(scroll_x, scroll_y)
-			show()
-			time.sleep(scroll_sleep)
 
 # Endpoint - TestLogic
 if __name__ == "__main__":
